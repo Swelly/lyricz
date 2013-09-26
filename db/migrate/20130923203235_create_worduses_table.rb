@@ -3,6 +3,7 @@ class CreateWordusesTable < ActiveRecord::Migration
     create_table :worduses, :id => false do |t|
    	 t.integer :musician_id
    	 t.integer :word_id
+     t.integer :count
    end
   end
 end

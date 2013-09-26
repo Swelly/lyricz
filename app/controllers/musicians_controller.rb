@@ -13,33 +13,24 @@ class MusiciansController < ApplicationController
 
 
 	def musician_query
-
-		Musician.delete_all
-
-		name = params[:musician_query].chomp.downcase
-    musician = Musician.find_by_name(name)
+		@musician_name = params[:musician_query].downcase
+    musician = Musician.find_by_name(@musician_name)
 
     if !musician
-
-    	name, words = musician_wordcount(name)
-
+      musician_wordcount(@musician_name)
+      words = musician_wordcount(@musician_name)
       # api stuff and save new musician
-      musician = Musician.create(name: name.chomp.downcase)
-
+      musician = Musician.create(name: @musician_name)
+      binding.pry
       words.each do |key, value|
         ### line below is rails shortcut
         word = find_by_word(key)
         if !word
           word = Word.create(word: key)
         end
-
         Worduse.create(:count => value, :musician_id => musician.id, :word_id => word.id)
-        ##dont need to have :count etc in attr accessable if use below method 
-        # musician.worduses << worduse
-        # word.worduses << worduse
       end
     end
-
 		redirect_to musician_path(musician)
 
  	end
@@ -47,8 +38,14 @@ class MusiciansController < ApplicationController
 
 end
 
-    
 
+  def api_search_musician(musician_name)
+
+    query = musician_name
+    search = MusicBrainz::Artist.find_by_name("#{query.downcase.gsub(" ", "_")}")
+    return search
+
+  end
 
 
 
