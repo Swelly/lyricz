@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20130925233212) do
   add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
 
-  create_table "artists", :force => true do |t|
+  create_table "musicians", :force => true do |t|
     t.string   "name"
     t.integer  "search_count"
     t.datetime "created_at",   :null => false
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(:version => 20130925233212) do
     t.datetime "updated_at",   :null => false
   end
 
-  create_table "worduses", :force => true do |t|
-    t.integer "artist_id"
+  create_table "worduses", :id => false, :force => true do |t|
+    t.integer "musician_id"
     t.integer "word_id"
     t.integer "count"
   end
