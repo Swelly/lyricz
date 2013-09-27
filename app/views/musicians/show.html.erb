@@ -1,3 +1,27 @@
-show.html.erb
 
-ok.
+
+<div class="four columns offset-by-six alpha">
+<br>
+<br>
+<h1>MERDS</h1>
+<p><span class="small">(music words)</span></p>
+<h5>Who's singing what.</h5>
+<br>
+<form action="/musician_query" method='post' >
+	<!-- <label for="query" >Artist:</label> -->
+	<input type='text' placeholder="<% @worduse.first(1).each do |worduse| %>
+		 <%= worduse.musician.name.upcase%><% end %>" name='musician_query' />
+	<input type='submit'>
+<form>
+
+
+<table>
+<% @worduse.order('count DESC').take(100).each do |worduse| %>
+ <%	next if worduse.word.is_common == true %>
+		<tr>
+			<td><%= worduse.word.word  %></td>
+		<td><%= worduse.count%></td>
+		</tr>
+<% end %>
+</table>
+</div>

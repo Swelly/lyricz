@@ -1,16 +1,18 @@
 class MusiciansController < ApplicationController
-	# require 'lib/api_search'
-	include ApiSearch
+  # require 'lib/api_search'
+  include ApiSearch
 
 
-	def index
-		@musician = Musician.new
-	end
+  def index
+    @musician = Musician.new
+  end
 
-	def show
-		render text: "SHOW TEST 123"
-	end
-
+  def show
+    musician = Musician.find(params[:id])
+    @worduse = Worduse.where(:musician_id => musician.id)
+              # Person.where(:user_name => "xyz", :status => ["active", "deleted"])
+    puts @worduse
+  end
 
 	def musician_query
 		@musician_name = params[:musician_query].downcase
@@ -20,11 +22,13 @@ class MusiciansController < ApplicationController
       musician_wordcount(@musician_name)
       words = musician_wordcount(@musician_name)
       # api stuff and save new musician
+
       musician = Musician.create(name: @musician_name)
-      binding.pry
-      words.each do |key, value|
+
+      words[1].each do |key, value|
         ### line below is rails shortcut
-        word = find_by_word(key)
+
+        word = Word.find_by_word(key)
         if !word
           word = Word.create(word: key)
         end
@@ -32,10 +36,7 @@ class MusiciansController < ApplicationController
       end
     end
 		redirect_to musician_path(musician)
-
- 	end
-
-
+  end
 end
 
 
@@ -46,7 +47,6 @@ end
     return search
 
   end
-
 
 
 

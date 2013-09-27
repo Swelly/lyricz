@@ -9,6 +9,7 @@ gem 'devise'
 gem 'jquery-rails'
 
 gem 'pry'
+gem "pry-rails"
 gem 'pry-nav'
 gem 'lyricfy'
 gem 'musicbrainz', '~> 0.7.6'
@@ -30,7 +31,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
-# gem 'uglifier', '>= 1.0.3'
+gem 'uglifier', '>= 1.0.3'
 
 
 # gem 'httparty'
